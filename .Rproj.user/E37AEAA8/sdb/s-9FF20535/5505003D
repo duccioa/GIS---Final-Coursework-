@@ -1,0 +1,17 @@
+{
+    "contents" : "library(maptools)\nlibrary(rgdal)\nlibrary(rgeos)\nlibrary(ggmap)\nlibrary(sp)\nadd.alpha <- function(col, alpha=1){\n    if(missing(col))\n        stop(\"Please provide a vector of colours.\")\n    apply(sapply(col, col2rgb)/255, 2, \n          function(x) \n              rgb(x[1], x[2], x[3], alpha=alpha))  \n}\nlondon_pol40 <- readOGR(\"./shapes/london/clean\", \"london_clean_40\")\nplot(london_pol40, col = \"red\", border = \"white\")\nplot(london_boundaries, col = \"black\", add = TRUE)\n\nalpha_col <- add.alpha(\"red\", 0.5)\nlondon_cmi <- SPDF.Cmi_Index(london_pol40)#Calculate compactness\n#Analysis of the sign\nlondon_cmi@data$col <- \"green\"\nupper_limit <- 0.98\nlower_limit <- 0.02\nlondon_cmi@data$col[london_cmi@data$C_mi >= quantile(london_cmi@data$C_mi, upper_limit)] <- \"blue\"\nlondon_cmi@data$col[london_cmi@data$C_mi <= quantile(london_cmi@data$C_mi, lower_limit)] <- \"yellow\"\nlondon_cmi@data$col[london_cmi@data$C_mi>0] <- \"red\"\nplot(london_cmi, col = london_cmi@data$col)\n\n\n\n\n",
+    "created" : 1450881884027.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "622498400",
+    "id" : "5505003D",
+    "lastKnownWriteTime" : 1450880844,
+    "path" : "~/CLOUD/C07_UCL_SmartCities/GIS/GIS_Coursework/00_Code/London_analysis.R",
+    "project_path" : "London_analysis.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
