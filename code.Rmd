@@ -1,3 +1,8 @@
+---
+output: pdf_document
+---
+
+```{r}
 library(sp)
 
 extract.areas <- function(sp){
@@ -43,19 +48,19 @@ calc.A_rec <- function(v){
 calc.coords_g <- function(v, x_or_y = "x", shape = "tri"){
     if(x_or_y == "x"){
         if(shape == "tri"){return((v[1]+2*v[3])/3)}#centroid's x_gt of the triangle
-        if(shape == "rec"){return((v[1]+v[3])/2)}#centroid's x_gt of the rectangle    
+        if(shape == "rec"){return((v[2]+2*v[4])/3)}#centroid's y_gt of the triangle    
     }
     if(x_or_y == "y"){
-        if(shape == "tri"){return((2*v[2]+v[4])/3)}#centroid's y_gr of the triangle
+        if(shape == "tri"){return((v[1]+v[3])/2)}#centroid's x_gr of the rectangle
         if(shape == "rec"){return(v[2]/2)}#centroid's y_gr of the rectangle
     }
 }
 ##########################################################################################
 #4#
 #calculate MI
-calc.I_tr <- function(v, Area){Area*((v[3]-v[1])^2 + (v[4]-v[2])^2)/18}#I_tr
+calc.I_tr <- function(v, Area){Area*((v[3]-v[1])^2 + (v[2]-v[4])^2)/18}#I_tr
 
-calc.I_rec <- function(v, Area){Area*((v[3]-v[1])^2 + v[2]^2)/12}#I_rec
+calc.I_rec <- function(v, Area){Area*((v[3]-v[1])^2 + v[2])/12}#I_rec
 ##########################################################################################
 
 #5#
@@ -91,23 +96,26 @@ calc.Cmi_index <- function(V_df, A_pol){
 
 Polygon.Cmi_index <- function(sp, i){
     Area_polygon <- sp@polygons[i][[1]]@Polygons[[1]]@area
-    V_lines <- fetch.lines(sp, i)
-    V_dataframe <- create.df(V_lines)
-    C_mi <- calc.Cmi_index(V_dataframe, Area_polygon)
+    V_matrix <- fetch.lines(sp, i)
+    V_polygon <- create.df(V_matrix)
+    C_mi <- calc.Cmi_index(V_polygon, Area_polygon)
     return(C_mi)
 }
 
 
 ##Add a column of C_mi indexes to the polygon dataframe
 SPDF.Cmi_Index <- function(spdf){
-    n <- length(spdf@polygons)#fetch total number of polygons
+    n <- length(spdf@polygons)
     polygons.areas <- extract.areas(spdf)
-    Cmi_indexes <- rep(0, n)#create an empty vector
+    Cmi_indexes <- rep(0, n)
     for(i in 1:n){
-        Cmi_indexes[i] <- Polygon.Cmi_index(spdf, i)#calculate the index of compactnes for each polygon
+        Cmi_indexes[i] <- Polygon.Cmi_index(spdf, i)
     }
-    spdf@data$C_mi <- Cmi_indexes #add the column with the index to the polygon's dataframe
+    spdf@data$C_mi <- Cmi_indexes
     return(spdf)
 }
 
+
+
+```
 

@@ -36,11 +36,11 @@ x <- centroids[,1]
 y <- centroids[,2]
 z <- 1.4 + 0.1*x + 0.2*y + 0.002*x*x
 plot(SpP, col = 1:3, pbg="white")
-spdf <- SpatialPolygonsDataFrame(SpP,
+spdf_test <- SpatialPolygonsDataFrame(SpP,
                                  data=data.frame(x=x, y=y, z=z, row.names=row.names(SpP)))
 
 
-rm(Sr1, Sr2, Sr3, Sr4, Srs1, Srs2, Srs3, SpP, x, y, z, centroids)
+rm(Sr1, Sr2, Sr3, Srs1, Srs2, Srs3, SpP, x, y, z, centroids)
 
 
 ####moment of inertia Jz
