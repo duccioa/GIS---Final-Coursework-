@@ -13,6 +13,7 @@ extract.areas <- function(sp){
 fetch.lines <- function(sp, i){
     coords <- sp@polygons[i][[1]]@Polygons[[1]]@coords#extract the coordinates of the vertex
     n <- nrow(coords)
+    coords <- coords[n:1, ]
     v <- cbind(coords[1:(n-1),], coords[2:n,])
     return(v)
 }
