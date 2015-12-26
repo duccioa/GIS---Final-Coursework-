@@ -14,23 +14,12 @@ london_pol40 <- readOGR("../shapes/london/clean", "london_clean_40")
 plot(london_pol40, col = "red", border = "white")
 plot(london_boundaries, col = "black", add = TRUE)
 
-alpha_col <- add.alpha("red", 0.5)
 london_pol40 <- SPDF.Cmi_Index(london_pol40)#Calculate compactness
 london_pol40@data$C_mi <- abs(london_pol40@data$C_mi)
-#Analysis of the sign
-london_pol40@data$col <- "coral"
-london_pol40@data$col[london_pol40@data$C_mi < 0] <- "blue"
-upper_limit <- 0.98
-lower_limit <- 0.02
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.10)] <- "coral"
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.30)] <- "coral2"
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.50)] <- "brown1"
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.70)] <- "brown3"
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.99)] <- "firebrick"
-london_pol40@data$col[london_pol40@data$C_mi >= quantile(london_pol40@data$C_mi, 0.995)] <- "darkred"
 
-
-plot(london_pol40, col = london_pol40@data$col, lwd = 0.05)
+alpha_col <- add.alpha("blue", 0.5)
+plot(london_pol40@data$id, london_pol40@data$C_mi, 
+     ylim = c(-0.000005,0.000005), col = alpha_col, pch = 20, cex = 1)
 
 
 

@@ -94,6 +94,7 @@ Polygon.Cmi_index <- function(sp, i){
     V_lines <- fetch.lines(sp, i)
     V_dataframe <- create.df(V_lines)
     C_mi <- calc.Cmi_index(V_dataframe, Area_polygon)
+    write.csv(V_dataframe, "./debug/V_DataFrame.csv", sep = ";")#DEBUG
     return(C_mi)
 }
 
@@ -106,7 +107,7 @@ SPDF.Cmi_Index <- function(spdf){
     for(i in 1:n){
         Cmi_indexes[i] <- Polygon.Cmi_index(spdf, i)#calculate the index of compactnes for each polygon
     }
-    spdf@data$C_mi <- Cmi_indexes #add the column with the index to the polygon's dataframe
+    spdf@data$C_mi <- Cmi_indexes #add the column with the index to the polygon's
     return(spdf)
 }
 
