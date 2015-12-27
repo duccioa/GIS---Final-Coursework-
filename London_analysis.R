@@ -22,5 +22,6 @@ plot(london_pol40@data$id, london_pol40@data$C_mi,
      ylim = c(-0.000005,0.000005), col = alpha_col, pch = 20, cex = 1)
 
 
-
-
+#debug of the analysis
+areas <- extract.areas(london_pol40)
+london_Cmi <- SPDF.Cmi_Index(london_pol40)

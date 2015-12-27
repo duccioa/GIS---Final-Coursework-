@@ -42,7 +42,7 @@ spdf_test <- SpatialPolygonsDataFrame(SpP,
 
 rm(Sr1, Sr2, Sr3, Srs1, Srs2, Srs3, SpP, x, y, z, centroids)
 
-
-####moment of inertia Jz
+Polygon.Cmi_index(spdf_test, 3)
+####
 
 
