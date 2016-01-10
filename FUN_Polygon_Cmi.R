@@ -42,6 +42,7 @@ calc.A_polygon <- function(sp, id){
     return(area/2)
 }
 ################################################################################
+#Takes a SpatialPolygonDataFrame and a polygon's id and
 #creates the matrix V with coordinates x1,y1,x2,y2 
 #of each segment of the polygon
 fetch.lines <- function(sp, id){
@@ -94,6 +95,8 @@ calc.I_rec <- function(v){v[6]*((v[3]-v[1])^2 + v[2]^2)/12}#I_rec
 ################################################################################
 
 #Create dataframe to df_MI used to perform the final calculation of the MIg
+#Takes as an input the four columns matrix of the coordinates x1,y1 and x2,y2 
+#of the polygon's edges
 create.df <- function(V){
     A_tr <- apply(V, 1, calc.A_tr)#Area triangle
     A_rec <- apply(V, 1, calc.A_rec)#Area rectangle
@@ -104,7 +107,7 @@ create.df <- function(V){
     y_gr <- apply(V, 1, calc.coords_g, x_or_y = "y", shape = "rec")
     V2 <- cbind(V, A_tr, A_rec)
     I_tr <- apply(V2, 1, calc.I_tr)#MI of the triangle about its centroid
-    I_rec <- apply(V2, 1, calc.I_rec)
+    I_rec <- apply(V2, 1, calc.I_rec)#MI of the triangle about its centroid
     V_df <- data.frame(line_ID = seq(1, nrow(V)), 
                        cbind(V, x_gt, y_gt, A_tr, 
                              I_tr, x_gr, y_gr, A_rec, I_rec))

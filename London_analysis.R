@@ -11,6 +11,9 @@ if(!exists("plot_spdf_byClassInt", mode="function")) source("./FUN_Plot_map_byCl
 if(!exists("creat.bbox", mode="function")) source("./FUN_Create_Bbox.R")
 
 london <- readOGR("../shapes/london/clean", "london")
+pdf("../Figures/london_map.pdf")
+plot(london, bg = "black", col = "white", title = "London Blocks")
+dev.off()
 #proj4string(london) <- CRS("+init=epsg:27700")#set the reference system in British National Grid
 #london <- spTransform(london, CRS("+init=epsg:4326"))#Convert to WGS84
 london_Cmi <- SPDF.Cmi_Index(london, 6)
